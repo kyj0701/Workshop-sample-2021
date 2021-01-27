@@ -7,9 +7,9 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center_vertical"
-        android:layout_weight="8">
+        android:layout_weight="8"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/listTitle"
@@ -28,20 +28,27 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/todoDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="Due Date" />
 
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="3">
+        android:layout_weight="3"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
 
 
             <Button
@@ -49,28 +56,35 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="15dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/radius"
                 android:text="@string/edit"
                 android:textColor="#78909c"
-                android:textSize="11sp"
-                android:background="@drawable/radius"/>
+                android:textSize="11sp" />
 
 
             <Button
                 android:id="@+id/delBtn"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
+                android:background="@drawable/radius"
                 android:text="@string/x"
-                android:textSize="11sp"
                 android:textColor="#78909c"
-                android:background="@drawable/radius"/>
+                android:textSize="11sp" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/Finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Finished" />
 
     </LinearLayout>
 

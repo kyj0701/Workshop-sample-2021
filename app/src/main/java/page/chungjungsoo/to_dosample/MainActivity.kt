@@ -1,5 +1,7 @@
 package page.chungjungsoo.to_dosample
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Build
@@ -11,14 +13,14 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsetsController
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import page.chungjungsoo.to_dosample.todo.Todo
 import page.chungjungsoo.to_dosample.todo.TodoDatabaseHelper
 import page.chungjungsoo.to_dosample.todo.TodoListViewAdapter
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     var dbHandler : TodoDatabaseHelper? = null
@@ -57,9 +59,35 @@ class MainActivity : AppCompatActivity() {
             // Get elements from custom dialog layout (add_todo_dialog.xml)
             val titleToAdd = dialogView.findViewById<EditText>(R.id.todoTitle)
             val desciptionToAdd = dialogView.findViewById<EditText>(R.id.todoDescription)
+            val duedateToAdd = dialogView.findViewById<Button>(R.id.dueDate)
+            val datetextToAdd = dialogView.findViewById<TextView>(R.id.dateText)
+            val timetextToAdd = dialogView.findViewById<TextView>(R.id.timeText)
+            val finishedToAdd = dialogView.findViewById<CheckBox>(R.id.todoFinished)
 
             // Add InputMethodManager for auto keyboard popup
             val ime = applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+            duedateToAdd.setOnClickListener {
+                ime.hideSoftInputFromWindow(titleToAdd.windowToken, 0)
+                val now = GregorianCalendar()
+                val hour: Int = now.get(Calendar.HOUR)
+                val minute: Int = now.get(Calendar.MINUTE)
+
+                val dlg2 = TimePickerDialog( this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute -> timetextToAdd.text = "${hourOfDay}:${minute}"}, hour, minute, true)
+                dlg2.show()
+
+                val today = GregorianCalendar()
+                val year: Int = today.get(Calendar.YEAR)
+                val month: Int = today.get(Calendar.MONTH)
+                val date: Int = today.get(Calendar.DATE)
+
+                val dlg = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth -> datetextToAdd.text = "${year}년 ${month+1}월 ${dayOfMonth}일" }, year, month, date)
+                dlg.show()
+            }
+
+            finishedToAdd.setOnCheckedChangeListener{_, isChecked ->
+                finishedToAdd.isChecked = isChecked
+            }
 
             // Cursor auto focus on title when AlertDialog is inflated
             titleToAdd.requestFocus()
@@ -78,7 +106,9 @@ class MainActivity : AppCompatActivity() {
                         val todo = Todo(
                             titleToAdd.text.toString(),
                             desciptionToAdd.text.toString(),
-                            false
+                            datetextToAdd.text.toString(),
+                            timetextToAdd.text.toString(),
+                            finishedToAdd.isChecked
                         )
                         dbHandler!!.addTodo(todo)
 
